@@ -17,7 +17,7 @@ public class PropertyResponseDTO {
 
     private PropertyType type;
 
-    public static PropertyResponseDTO of(final Property in) {
+    public static PropertyResponseDTO of(Property in) {
         PropertyResponseDTO result = new PropertyResponseDTO();
         result.setId(in.getId());
         result.setName(in.getName());

@@ -28,7 +28,7 @@ public class BookingResponseDTO {
 
     private BookingStatus status;
 
-    public static BookingResponseDTO of(final Booking in) {
+    public static BookingResponseDTO of(Booking in) {
         BookingResponseDTO result = new BookingResponseDTO();
         result.setId(in.getId());
         result.setPropertyDTO(PropertyResponseDTO.of(in.getProperty()));

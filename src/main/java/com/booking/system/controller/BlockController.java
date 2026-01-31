@@ -23,17 +23,17 @@ public class BlockController {
     private final BlockService blockService;
 
     @PostMapping
-    public ResponseEntity<BlockResponseDTO> create(final @RequestBody @Valid BlockRequestDTO blockRequestDTO) {
+    public ResponseEntity<BlockResponseDTO> create(@RequestBody @Valid BlockRequestDTO blockRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(blockService.create(blockRequestDTO));
     }
 
     @PutMapping("/{id}")
-    public BlockResponseDTO update(final @RequestBody @Valid BlockRequestDTO blockRequestDTO, @PathVariable Long id) {
+    public BlockResponseDTO update(@RequestBody @Valid BlockRequestDTO blockRequestDTO, @PathVariable Long id) {
         return blockService.update(blockRequestDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable final Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         blockService.delete(id);
         return ResponseEntity.noContent().build();
     }

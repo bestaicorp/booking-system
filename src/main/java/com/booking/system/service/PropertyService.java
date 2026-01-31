@@ -35,7 +35,7 @@ public class PropertyService {
         return PropertyResponseDTO.of(propertyDB);
     }
 
-    public void delete(final Long propertyId) {
+    public void delete(Long propertyId) {
         log.info("Deleting property {}", propertyId);
         Property property = propertyRepository.findById(propertyId)
                 .orElseThrow(() -> new PropertyNotFoundException(propertyId));

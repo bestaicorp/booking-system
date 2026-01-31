@@ -35,7 +35,7 @@ public class GuestService {
         return GuestResponseDTO.of(guestDB);
     }
 
-    public void delete(final Long guestId) {
+    public void delete(Long guestId) {
         log.info("Deleting guest {}", guestId);
         Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new GuestNotFoundException(guestId));
         guestRepository.delete(guest);

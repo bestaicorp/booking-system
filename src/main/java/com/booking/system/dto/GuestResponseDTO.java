@@ -16,7 +16,7 @@ public class GuestResponseDTO {
 
     private String email;
 
-    public static GuestResponseDTO of(final Guest in) {
+    public static GuestResponseDTO of(Guest in) {
         GuestResponseDTO result = new GuestResponseDTO();
         result.setId(in.getId());
         result.setName(in.getName());

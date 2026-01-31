@@ -25,32 +25,32 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<BookingResponseDTO> create(final @RequestBody @Valid BookingRequestDTO bookingRequestDTO) {
+    public ResponseEntity<BookingResponseDTO> create(@RequestBody @Valid BookingRequestDTO bookingRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.create(bookingRequestDTO));
     }
 
     @GetMapping("/{id}")
-    public BookingResponseDTO get(@PathVariable final Long id) {
+    public BookingResponseDTO get(@PathVariable Long id) {
         return bookingService.get(id);
     }
 
     @PutMapping("/{id}")
-    public BookingResponseDTO update(final @RequestBody @Valid BookingRequestDTO bookingRequestDTO, @PathVariable Long id) {
+    public BookingResponseDTO update(@RequestBody @Valid BookingRequestDTO bookingRequestDTO, @PathVariable Long id) {
         return bookingService.update(bookingRequestDTO, id);
     }
 
     @PatchMapping("/{id}/cancel")
-    public BookingResponseDTO cancel(@PathVariable final Long id) {
+    public BookingResponseDTO cancel(@PathVariable Long id) {
         return bookingService.cancel(id);
     }
 
     @PatchMapping("/{id}/rebook")
-    public BookingResponseDTO rebook(@PathVariable final Long id) {
+    public BookingResponseDTO rebook(@PathVariable Long id) {
         return bookingService.rebook(id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable final Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         bookingService.delete(id);
         return ResponseEntity.noContent().build();
     }

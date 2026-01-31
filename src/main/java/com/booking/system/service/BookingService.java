@@ -46,7 +46,7 @@ public class BookingService {
         return BookingResponseDTO.of(saved);
     }
 
-    public BookingResponseDTO get(final Long bookingId) {
+    public BookingResponseDTO get(Long bookingId) {
         log.debug("Fetching booking with id {}", bookingId);
         Booking bookingDB = findBooking(bookingId);
         return BookingResponseDTO.of(bookingDB);
@@ -72,7 +72,7 @@ public class BookingService {
         return BookingResponseDTO.of(updated);
     }
 
-    public BookingResponseDTO cancel(final Long bookingId) {
+    public BookingResponseDTO cancel(Long bookingId) {
         log.info("Cancelling booking {}", bookingId);
         Booking bookingDB = findBooking(bookingId);
         if (bookingDB.getStatus() == CANCELLED) {
@@ -83,7 +83,7 @@ public class BookingService {
         return BookingResponseDTO.of(bookingDB);
     }
 
-    public BookingResponseDTO rebook(final Long bookingId) {
+    public BookingResponseDTO rebook(Long bookingId) {
         log.info("Rebooking booking {}", bookingId);
         Booking bookingDB = findBooking(bookingId);
         if (bookingDB.getStatus() != CANCELLED) {
@@ -99,7 +99,7 @@ public class BookingService {
         return BookingResponseDTO.of(bookingDB);
     }
 
-    public void delete(final Long bookingId) {
+    public void delete(Long bookingId) {
         log.info("Deleting booking {}", bookingId);
         bookingRepository.delete(findBooking(bookingId));
         log.info("Booking {} deleted successfully", bookingId);

@@ -19,7 +19,7 @@ public class PropertyRequestDTO {
     @NotNull(message = "Property type is required")
     private PropertyType type;
 
-    public static Property toProperty(final PropertyRequestDTO in) {
+    public static Property toProperty(PropertyRequestDTO in) {
         Property result = new Property();
         result.setName(in.getName());
         result.setType(in.getType());

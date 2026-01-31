@@ -23,17 +23,17 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<PropertyResponseDTO> create(final @RequestBody @Valid PropertyRequestDTO propertyRequestDTO) {
+    public ResponseEntity<PropertyResponseDTO> create(@RequestBody @Valid PropertyRequestDTO propertyRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.create(propertyRequestDTO));
     }
 
     @PutMapping("/{id}")
-    public PropertyResponseDTO update(final @RequestBody @Valid PropertyRequestDTO propertyRequestDTO, @PathVariable Long id) {
+    public PropertyResponseDTO update(@RequestBody @Valid PropertyRequestDTO propertyRequestDTO, @PathVariable Long id) {
         return propertyService.update(propertyRequestDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable final Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         propertyService.delete(id);
         return ResponseEntity.noContent().build();
     }

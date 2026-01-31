@@ -24,7 +24,7 @@ public class BlockResponseDTO {
 
     private String reason;
 
-    public static BlockResponseDTO of(final Block in) {
+    public static BlockResponseDTO of(Block in) {
         BlockResponseDTO result = new BlockResponseDTO();
         result.setId(in.getId());
         result.setPropertyDTO(PropertyResponseDTO.of(in.getProperty()));

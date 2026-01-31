@@ -26,7 +26,7 @@ public class BookingRequestDTO {
     @NotNull(message = "End date is required")
     private LocalDate endDate;
 
-    public static Booking toBooking(final BookingRequestDTO in, Property property, Guest guest) {
+    public static Booking toBooking(BookingRequestDTO in, Property property, Guest guest) {
         Booking result = new Booking();
         result.setProperty(property);
         result.setGuest(guest);

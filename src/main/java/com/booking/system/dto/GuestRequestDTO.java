@@ -19,7 +19,7 @@ public class GuestRequestDTO {
     @Email(message = "Email must be valid")
     private String email;
 
-    public static Guest toGuest(final GuestRequestDTO in) {
+    public static Guest toGuest(GuestRequestDTO in) {
         Guest result = new Guest();
         result.setName(in.getName());
         result.setEmail(in.getEmail());

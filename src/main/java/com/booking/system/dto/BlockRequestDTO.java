@@ -25,7 +25,7 @@ public class BlockRequestDTO {
 
     private String reason;
 
-    public static Block toBlock(final BlockRequestDTO in, Property property) {
+    public static Block toBlock(BlockRequestDTO in, Property property) {
         Block result = new Block();
         result.setProperty(property);
         result.setStartDate(in.getStartDate());

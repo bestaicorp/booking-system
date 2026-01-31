@@ -51,7 +51,7 @@ public class BlockService {
         return BlockResponseDTO.of(updated);
     }
 
-    public void delete(final Long blockId) {
+    public void delete(Long blockId) {
         log.info("Deleting block {}", blockId);
         blockRepository.delete(findBlock(blockId));
         log.info("Block {} deleted successfully", blockId);
