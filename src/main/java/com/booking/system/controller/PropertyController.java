@@ -11,14 +11,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,6 +40,25 @@ public class PropertyController {
     @PostMapping
     public ResponseEntity<PropertyResponseDTO> create(@RequestBody @Valid PropertyRequestDTO propertyRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.create(propertyRequestDTO));
+    }
+
+    @Operation(summary = "Get all properties", description = "Retrieves a paginated list of all properties, sorted by newest first.")
+    @ApiResponse(responseCode = "200", description = "Properties retrieved successfully")
+    @GetMapping
+    public Page<PropertyResponseDTO> getAll(
+            @Parameter(description = "Page number (zero-based)", example = "0") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Number of items per page", example = "20") @RequestParam(defaultValue = "20") int size) {
+        return propertyService.getAll(page, size);
+    }
+
+    @Operation(summary = "Get a property", description = "Retrieves a property by its ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Property found"),
+            @ApiResponse(responseCode = "404", description = "Property not found", content = @Content)
+    })
+    @GetMapping("/{id}")
+    public PropertyResponseDTO get(@Parameter(description = "Property ID", example = "1") @PathVariable Long id) {
+        return propertyService.get(id);
     }
 
     @Operation(summary = "Update a property", description = "Updates an existing property's name and type.")

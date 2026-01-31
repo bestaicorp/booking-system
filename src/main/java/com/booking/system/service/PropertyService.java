@@ -7,6 +7,9 @@ import com.booking.system.model.Property;
 import com.booking.system.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,19 @@ public class PropertyService {
         Property saved = propertyRepository.save(PropertyRequestDTO.toProperty(propertyRequestDTO));
         log.info("Property created successfully with id {}", saved.getId());
         return PropertyResponseDTO.of(saved);
+    }
+
+    public Page<PropertyResponseDTO> getAll(int page, int size) {
+        log.debug("Fetching properties page {} with size {}", page, size);
+        return propertyRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")))
+                .map(PropertyResponseDTO::of);
+    }
+
+    public PropertyResponseDTO get(Long propertyId) {
+        log.debug("Fetching property with id {}", propertyId);
+        Property property = propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new PropertyNotFoundException(propertyId));
+        return PropertyResponseDTO.of(property);
     }
 
     public PropertyResponseDTO update(PropertyRequestDTO propertyRequestDTO, Long id) {

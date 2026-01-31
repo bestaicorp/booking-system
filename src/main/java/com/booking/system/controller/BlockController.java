@@ -11,14 +11,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,6 +42,25 @@ public class BlockController {
     @PostMapping
     public ResponseEntity<BlockResponseDTO> create(@RequestBody @Valid BlockRequestDTO blockRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(blockService.create(blockRequestDTO));
+    }
+
+    @Operation(summary = "Get all blocks", description = "Retrieves a paginated list of all blocks, sorted by newest first.")
+    @ApiResponse(responseCode = "200", description = "Blocks retrieved successfully")
+    @GetMapping
+    public Page<BlockResponseDTO> getAll(
+            @Parameter(description = "Page number (zero-based)", example = "0") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Number of items per page", example = "20") @RequestParam(defaultValue = "20") int size) {
+        return blockService.getAll(page, size);
+    }
+
+    @Operation(summary = "Get a block", description = "Retrieves a block by its ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Block found"),
+            @ApiResponse(responseCode = "404", description = "Block not found", content = @Content)
+    })
+    @GetMapping("/{id}")
+    public BlockResponseDTO get(@Parameter(description = "Block ID", example = "1") @PathVariable Long id) {
+        return blockService.get(id);
     }
 
     @Operation(summary = "Update a block", description = "Updates an existing block. Validates date range and checks for overlaps.")

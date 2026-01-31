@@ -14,6 +14,9 @@ import com.booking.system.repository.GuestRepository;
 import com.booking.system.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,7 @@ import static com.booking.system.enumeration.BookingStatus.REBOOKED;
 @RequiredArgsConstructor
 @Transactional
 public class BookingService {
+
     private final BookingRepository bookingRepository;
     private final AvailabilityService availabilityService;
     private final DateValidationService dateValidationService;
@@ -44,6 +48,12 @@ public class BookingService {
         Booking saved = bookingRepository.save(BookingRequestDTO.toBooking(bookingRequestDTO, property, guest));
         log.info("Booking created successfully with id {}", saved.getId());
         return BookingResponseDTO.of(saved);
+    }
+
+    public Page<BookingResponseDTO> getAll(int page, int size) {
+        log.debug("Fetching bookings page {} with size {}", page, size);
+        return bookingRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")))
+                .map(BookingResponseDTO::of);
     }
 
     public BookingResponseDTO get(Long bookingId) {

@@ -7,6 +7,9 @@ import com.booking.system.model.Guest;
 import com.booking.system.repository.GuestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,19 @@ public class GuestService {
         Guest saved = guestRepository.save(GuestRequestDTO.toGuest(guestRequestDTO));
         log.info("Guest created successfully with id {}", saved.getId());
         return GuestResponseDTO.of(saved);
+    }
+
+    public Page<GuestResponseDTO> getAll(int page, int size) {
+        log.debug("Fetching guests page {} with size {}", page, size);
+        return guestRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")))
+                .map(GuestResponseDTO::of);
+    }
+
+    public GuestResponseDTO get(Long guestId) {
+        log.debug("Fetching guest with id {}", guestId);
+        Guest guest = guestRepository.findById(guestId)
+                .orElseThrow(() -> new GuestNotFoundException(guestId));
+        return GuestResponseDTO.of(guest);
     }
 
     public GuestResponseDTO update(GuestRequestDTO guestRequestDTO, Long id) {

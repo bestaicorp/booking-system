@@ -10,6 +10,9 @@ import com.booking.system.repository.BlockRepository;
 import com.booking.system.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +38,17 @@ public class BlockService {
         Block saved = blockRepository.save(BlockRequestDTO.toBlock(blockRequestDTO, property));
         log.info("Block created successfully with id {}", saved.getId());
         return BlockResponseDTO.of(saved);
+    }
+
+    public Page<BlockResponseDTO> getAll(int page, int size) {
+        log.debug("Fetching blocks page {} with size {}", page, size);
+        return blockRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")))
+                .map(BlockResponseDTO::of);
+    }
+
+    public BlockResponseDTO get(Long blockId) {
+        log.debug("Fetching block with id {}", blockId);
+        return BlockResponseDTO.of(findBlock(blockId));
     }
 
     public BlockResponseDTO update(BlockRequestDTO blockRequestDTO, Long id) {
