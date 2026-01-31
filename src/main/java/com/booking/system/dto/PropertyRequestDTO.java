@@ -5,6 +5,7 @@ import com.booking.system.model.Property;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class PropertyRequestDTO {
 
     @NotBlank(message = "Property name is required")
+    @Size(max = 255, message = "Property name must not exceed 255 characters")
     @Schema(description = "Name of the property", example = "Beach House")
     private String name;
 

@@ -5,6 +5,7 @@ import com.booking.system.model.Guest;
 import com.booking.system.model.Property;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,12 @@ import java.time.LocalDate;
 public class BookingRequestDTO {
 
     @NotNull(message = "Property ID is required")
+    @Positive(message = "Property ID must be a positive number")
     @Schema(description = "ID of the property to book", example = "1")
     private Long propertyId;
 
     @NotNull(message = "Guest ID is required")
+    @Positive(message = "Guest ID must be a positive number")
     @Schema(description = "ID of the guest making the booking", example = "1")
     private Long guestId;
 

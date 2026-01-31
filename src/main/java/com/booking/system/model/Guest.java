@@ -1,5 +1,6 @@
 package com.booking.system.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -19,7 +20,9 @@ public class Guest {
     @Setter(NONE)
     private Long id;
 
+    @Column(nullable = false, length = 255)
     private String name;
 
+    @Column(nullable = false, length = 255)
     private String email;
 }

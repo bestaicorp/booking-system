@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
+@Validated
 @RestController
 @RequestMapping("/api/v1/bookings")
 @RequiredArgsConstructor
@@ -49,8 +52,8 @@ public class BookingController {
     @ApiResponse(responseCode = "200", description = "Bookings retrieved successfully")
     @GetMapping
     public Page<BookingResponseDTO> getAll(
-            @Parameter(description = "Page number (zero-based)", example = "0") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "Number of items per page", example = "20") @RequestParam(defaultValue = "20") int size) {
+            @Parameter(description = "Page number (zero-based)", example = "0") @RequestParam(defaultValue = "0") @Min(0) int page,
+            @Parameter(description = "Number of items per page", example = "20") @RequestParam(defaultValue = "20") @Min(1) int size) {
         return bookingService.getAll(page, size);
     }
 

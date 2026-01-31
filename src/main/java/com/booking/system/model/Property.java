@@ -1,6 +1,7 @@
 package com.booking.system.model;
 
 import com.booking.system.enumeration.PropertyType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -23,8 +24,10 @@ public class Property {
     @Setter(NONE)
     private Long id;
 
+    @Column(nullable = false, length = 255)
     private String name;
 
     @Enumerated(STRING)
+    @Column(nullable = false, length = 50)
     private PropertyType type;
 }

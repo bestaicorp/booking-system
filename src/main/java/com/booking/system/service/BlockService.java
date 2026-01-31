@@ -56,10 +56,10 @@ public class BlockService {
                 id, blockRequestDTO.getPropertyId(),
                 blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate());
         dateValidationService.validate(blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate());
+        Block blockDB = findBlock(id);
         Property property = propertyRepository.findAndLockProperty(blockRequestDTO.getPropertyId())
                 .orElseThrow(() -> new PropertyNotFoundException(blockRequestDTO.getPropertyId()));
         availabilityService.ensureAvailableForBlock(blockRequestDTO.getPropertyId(), blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate(), id);
-        Block blockDB = findBlock(id);
         Block updated = updateBlock(blockRequestDTO, blockDB, property);
         log.info("Block {} updated successfully", id);
         return BlockResponseDTO.of(updated);
