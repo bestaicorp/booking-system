@@ -56,14 +56,14 @@ public class BookingService {
         log.info("Updating booking {} for property {}, dates: {} - {}",
                 id, bookingRequestDTO.getPropertyId(),
                 bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate());
-        dateValidationService.validate(bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate());
-        Property property = propertyRepository.findAndLockProperty(bookingRequestDTO.getPropertyId())
-                .orElseThrow(() -> new PropertyNotFoundException(bookingRequestDTO.getPropertyId()));
-        availabilityService.ensureAvailableForBooking(bookingRequestDTO.getPropertyId(), bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate(), id);
         Booking bookingDB = findBooking(id);
         if (bookingDB.getStatus() == CANCELLED) {
             throw new InvalidBookingStateException("Cannot update a cancelled booking");
         }
+        dateValidationService.validate(bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate());
+        Property property = propertyRepository.findAndLockProperty(bookingRequestDTO.getPropertyId())
+                .orElseThrow(() -> new PropertyNotFoundException(bookingRequestDTO.getPropertyId()));
+        availabilityService.ensureAvailableForBooking(bookingRequestDTO.getPropertyId(), bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate(), id);
 
         Guest guest = guestRepository.findById(bookingRequestDTO.getGuestId())
                 .orElseThrow(() -> new GuestNotFoundException(bookingRequestDTO.getGuestId()));
