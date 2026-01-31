@@ -27,10 +27,10 @@ public class BookingResponseDTO {
     @Schema(description = "Guest who made this booking")
     private GuestResponseDTO guestDTO;
 
-    @Schema(description = "Check-in date (inclusive)", example = "2025-06-01")
+    @Schema(description = "Check-in date (inclusive)", example = "2026-06-01")
     private LocalDate startDate;
 
-    @Schema(description = "Check-out date (exclusive)", example = "2025-06-10")
+    @Schema(description = "Check-out date (exclusive)", example = "2026-06-10")
     private LocalDate endDate;
 
     @Schema(description = "Current booking status", example = "BOOKED")

@@ -22,10 +22,10 @@ public class BlockResponseDTO {
     @Schema(description = "Property associated with this block")
     private PropertyResponseDTO propertyDTO;
 
-    @Schema(description = "Block start date (inclusive)", example = "2025-07-01")
+    @Schema(description = "Block start date (inclusive)", example = "2026-07-01")
     private LocalDate startDate;
 
-    @Schema(description = "Block end date (exclusive)", example = "2025-07-15")
+    @Schema(description = "Block end date (exclusive)", example = "2026-07-15")
     private LocalDate endDate;
 
     @Schema(description = "Reason for blocking the property", example = "Maintenance work")

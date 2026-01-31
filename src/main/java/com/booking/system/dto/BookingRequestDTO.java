@@ -26,11 +26,11 @@ public class BookingRequestDTO {
     private Long guestId;
 
     @NotNull(message = "Start date is required")
-    @Schema(description = "Check-in date (inclusive)", example = "2025-06-01")
+    @Schema(description = "Check-in date (inclusive)", example = "2026-06-01")
     private LocalDate startDate;
 
     @NotNull(message = "End date is required")
-    @Schema(description = "Check-out date (exclusive)", example = "2025-06-10")
+    @Schema(description = "Check-out date (exclusive)", example = "2026-06-10")
     private LocalDate endDate;
 
     public static Booking toBooking(BookingRequestDTO in, Property property, Guest guest) {
