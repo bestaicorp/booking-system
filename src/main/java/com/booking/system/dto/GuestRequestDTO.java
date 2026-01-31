@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GuestDTO {
-
-    private Long id;
+public class GuestRequestDTO {
 
     @NotBlank(message = "Guest name is required")
     private String name;
@@ -21,16 +19,8 @@ public class GuestDTO {
     @Email(message = "Email must be valid")
     private String email;
 
-    public static Guest toGuest(final GuestDTO in) {
+    public static Guest toGuest(final GuestRequestDTO in) {
         Guest result = new Guest();
-        result.setName(in.getName());
-        result.setEmail(in.getEmail());
-        return result;
-    }
-
-    public static GuestDTO of(final Guest in) {
-        GuestDTO result = new GuestDTO();
-        result.setId(in.getId());
         result.setName(in.getName());
         result.setEmail(in.getEmail());
         return result;

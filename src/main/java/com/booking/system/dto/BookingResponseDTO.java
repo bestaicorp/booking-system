@@ -17,10 +17,10 @@ public class BookingResponseDTO {
     private Long id;
 
     @JsonProperty("property")
-    private PropertyDTO propertyDTO;
+    private PropertyResponseDTO propertyDTO;
 
     @JsonProperty("guest")
-    private GuestDTO guestDTO;
+    private GuestResponseDTO guestDTO;
 
     private LocalDate startDate;
 
@@ -31,8 +31,8 @@ public class BookingResponseDTO {
     public static BookingResponseDTO of(final Booking in) {
         BookingResponseDTO result = new BookingResponseDTO();
         result.setId(in.getId());
-        result.setPropertyDTO(PropertyDTO.of(in.getProperty()));
-        result.setGuestDTO(GuestDTO.of(in.getGuest()));
+        result.setPropertyDTO(PropertyResponseDTO.of(in.getProperty()));
+        result.setGuestDTO(GuestResponseDTO.of(in.getGuest()));
         result.setStartDate(in.getStartDate());
         result.setEndDate(in.getEndDate());
         result.setStatus(in.getStatus());

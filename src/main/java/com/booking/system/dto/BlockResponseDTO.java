@@ -16,7 +16,7 @@ public class BlockResponseDTO {
     private Long id;
 
     @JsonProperty("property")
-    private PropertyDTO propertyDTO;
+    private PropertyResponseDTO propertyDTO;
 
     private LocalDate startDate;
 
@@ -27,7 +27,7 @@ public class BlockResponseDTO {
     public static BlockResponseDTO of(final Block in) {
         BlockResponseDTO result = new BlockResponseDTO();
         result.setId(in.getId());
-        result.setPropertyDTO(PropertyDTO.of(in.getProperty()));
+        result.setPropertyDTO(PropertyResponseDTO.of(in.getProperty()));
         result.setStartDate(in.getStartDate());
         result.setEndDate(in.getEndDate());
         result.setReason(in.getReason());

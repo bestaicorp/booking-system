@@ -1,6 +1,7 @@
 package com.booking.system.controller;
 
-import com.booking.system.dto.PropertyDTO;
+import com.booking.system.dto.PropertyRequestDTO;
+import com.booking.system.dto.PropertyResponseDTO;
 import com.booking.system.service.PropertyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<PropertyDTO> create(final @RequestBody @Valid PropertyDTO propertyDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.create(propertyDTO));
+    public ResponseEntity<PropertyResponseDTO> create(final @RequestBody @Valid PropertyRequestDTO propertyRequestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.create(propertyRequestDTO));
     }
 
-    @PutMapping
-    public PropertyDTO update(final @RequestBody @Valid PropertyDTO propertyDTO) {
-        return propertyService.update(propertyDTO);
+    @PutMapping("/{id}")
+    public PropertyResponseDTO update(final @RequestBody @Valid PropertyRequestDTO propertyRequestDTO, @PathVariable Long id) {
+        return propertyService.update(propertyRequestDTO, id);
     }
 
     @DeleteMapping("/{id}")

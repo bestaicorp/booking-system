@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PropertyDTO {
-
-    private Long id;
+public class PropertyRequestDTO {
 
     @NotBlank(message = "Property name is required")
     private String name;
@@ -21,16 +19,8 @@ public class PropertyDTO {
     @NotNull(message = "Property type is required")
     private PropertyType type;
 
-    public static Property toProperty(final PropertyDTO in) {
+    public static Property toProperty(final PropertyRequestDTO in) {
         Property result = new Property();
-        result.setName(in.getName());
-        result.setType(in.getType());
-        return result;
-    }
-
-    public static PropertyDTO of(final Property in) {
-        PropertyDTO result = new PropertyDTO();
-        result.setId(in.getId());
         result.setName(in.getName());
         result.setType(in.getType());
         return result;

@@ -1,6 +1,7 @@
 package com.booking.system.service;
 
-import com.booking.system.dto.PropertyDTO;
+import com.booking.system.dto.PropertyRequestDTO;
+import com.booking.system.dto.PropertyResponseDTO;
 import com.booking.system.exception.PropertyNotFoundException;
 import com.booking.system.model.Property;
 import com.booking.system.repository.PropertyRepository;
@@ -17,21 +18,21 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
 
-    public PropertyDTO create(PropertyDTO propertyDTO) {
-        log.info("Creating property with name: {}", propertyDTO.getName());
-        Property saved = propertyRepository.save(PropertyDTO.toProperty(propertyDTO));
+    public PropertyResponseDTO create(PropertyRequestDTO propertyRequestDTO) {
+        log.info("Creating property with name: {}", propertyRequestDTO.getName());
+        Property saved = propertyRepository.save(PropertyRequestDTO.toProperty(propertyRequestDTO));
         log.info("Property created successfully with id {}", saved.getId());
-        return PropertyDTO.of(saved);
+        return PropertyResponseDTO.of(saved);
     }
 
-    public PropertyDTO update(PropertyDTO propertyDTO) {
-        log.info("Updating property {}", propertyDTO.getId());
-        Property propertyDB = propertyRepository.findById(propertyDTO.getId())
-                .orElseThrow(() -> new PropertyNotFoundException(propertyDTO.getId()));
-        propertyDB.setName(propertyDTO.getName());
-        propertyDB.setType(propertyDTO.getType());
-        log.info("Property {} updated successfully", propertyDTO.getId());
-        return PropertyDTO.of(propertyDB);
+    public PropertyResponseDTO update(PropertyRequestDTO propertyRequestDTO, Long id) {
+        log.info("Updating property {}", id);
+        Property propertyDB = propertyRepository.findById(id)
+                .orElseThrow(() -> new PropertyNotFoundException(id));
+        propertyDB.setName(propertyRequestDTO.getName());
+        propertyDB.setType(propertyRequestDTO.getType());
+        log.info("Property {} updated successfully", id);
+        return PropertyResponseDTO.of(propertyDB);
     }
 
     public void delete(final Long propertyId) {

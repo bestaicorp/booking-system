@@ -1,6 +1,7 @@
 package com.booking.system.controller;
 
-import com.booking.system.dto.GuestDTO;
+import com.booking.system.dto.GuestRequestDTO;
+import com.booking.system.dto.GuestResponseDTO;
 import com.booking.system.service.GuestService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ public class GuestController {
     private final GuestService guestService;
 
     @PostMapping
-    public ResponseEntity<GuestDTO> create(final @RequestBody @Valid GuestDTO guestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(guestService.create(guestDTO));
+    public ResponseEntity<GuestResponseDTO> create(final @RequestBody @Valid GuestRequestDTO guestRequestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(guestService.create(guestRequestDTO));
     }
 
-    @PutMapping
-    public GuestDTO update(final @RequestBody @Valid GuestDTO guestDTO) {
-        return guestService.update(guestDTO);
+    @PutMapping("/{id}")
+    public GuestResponseDTO update(final @RequestBody @Valid GuestRequestDTO guestRequestDTO, @PathVariable Long id) {
+        return guestService.update(guestRequestDTO, id);
     }
 
     @DeleteMapping("/{id}")
