@@ -25,7 +25,6 @@ public class GuestDTO {
         Guest result = new Guest();
         result.setName(in.getName());
         result.setEmail(in.getEmail());
-
         return result;
     }
 
@@ -34,7 +33,6 @@ public class GuestDTO {
         result.setId(in.getId());
         result.setName(in.getName());
         result.setEmail(in.getEmail());
-
         return result;
     }
 }

@@ -24,13 +24,11 @@ public class BlockController {
 
     @PostMapping
     public ResponseEntity<BlockResponseDTO> create(final @RequestBody @Valid BlockRequestDTO blockRequestDTO) {
-
         return ResponseEntity.status(HttpStatus.CREATED).body(blockService.create(blockRequestDTO));
     }
 
     @PutMapping("/{id}")
     public BlockResponseDTO update(final @RequestBody @Valid BlockRequestDTO blockRequestDTO, @PathVariable Long id) {
-
         return blockService.update(blockRequestDTO, id);
     }
 

@@ -48,7 +48,6 @@ public class BlockService {
     }
 
     private Block updateBlock(BlockRequestDTO blockRequestDTO, Block block, Property property) {
-
         block.setStartDate(blockRequestDTO.getStartDate());
         block.setEndDate(blockRequestDTO.getEndDate());
         block.setReason(blockRequestDTO.getReason());

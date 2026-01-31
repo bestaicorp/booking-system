@@ -22,7 +22,6 @@ public class PropertyDTO {
     private PropertyType type;
 
     public static Property toProperty(final PropertyDTO in) {
-
         Property result = new Property();
         result.setName(in.getName());
         result.setType(in.getType());
@@ -30,7 +29,6 @@ public class PropertyDTO {
     }
 
     public static PropertyDTO of(final Property in) {
-
         PropertyDTO result = new PropertyDTO();
         result.setId(in.getId());
         result.setName(in.getName());

@@ -16,7 +16,6 @@ public class GuestService {
     private final GuestRepository guestRepository;
 
     public GuestDTO create(GuestDTO guestDTO) {
-
         return GuestDTO.of(guestRepository.save(GuestDTO.toGuest(guestDTO)));
     }
 

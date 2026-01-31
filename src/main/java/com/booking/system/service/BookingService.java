@@ -44,10 +44,6 @@ public class BookingService {
         return BookingResponseDTO.of(bookingDB);
     }
 
-    private Booking findBooking(Long bookingId) {
-        return bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
-    }
-
     public BookingResponseDTO update(BookingRequestDTO bookingRequestDTO, Long id) {
         dateValidationService.validate(bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate());
         Property property = propertyRepository.findAndLockProperty(bookingRequestDTO.getPropertyId())
@@ -87,6 +83,10 @@ public class BookingService {
 
     public void delete(final Long bookingId) {
         bookingRepository.delete(findBooking(bookingId));
+    }
+
+    private Booking findBooking(Long bookingId) {
+        return bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException(bookingId));
     }
 
     private Booking updateBooking(BookingRequestDTO bookingRequestDTO, Booking booking, Guest guest, Property property) {
