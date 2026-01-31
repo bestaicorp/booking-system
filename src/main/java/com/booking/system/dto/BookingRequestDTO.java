@@ -3,6 +3,7 @@ package com.booking.system.dto;
 import com.booking.system.model.Booking;
 import com.booking.system.model.Guest;
 import com.booking.system.model.Property;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,17 +14,23 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Request payload for creating or updating a booking")
 public class BookingRequestDTO {
+
     @NotNull(message = "Property ID is required")
+    @Schema(description = "ID of the property to book", example = "1")
     private Long propertyId;
 
     @NotNull(message = "Guest ID is required")
+    @Schema(description = "ID of the guest making the booking", example = "1")
     private Long guestId;
 
     @NotNull(message = "Start date is required")
+    @Schema(description = "Check-in date (inclusive)", example = "2025-06-01")
     private LocalDate startDate;
 
     @NotNull(message = "End date is required")
+    @Schema(description = "Check-out date (exclusive)", example = "2025-06-10")
     private LocalDate endDate;
 
     public static Booking toBooking(BookingRequestDTO in, Property property, Guest guest) {
@@ -35,4 +42,3 @@ public class BookingRequestDTO {
         return result;
     }
 }
-

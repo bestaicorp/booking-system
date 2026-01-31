@@ -3,6 +3,12 @@ package com.booking.system.controller;
 import com.booking.system.dto.GuestRequestDTO;
 import com.booking.system.dto.GuestResponseDTO;
 import com.booking.system.service.GuestService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,22 +24,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/guests")
 @RequiredArgsConstructor
+@Tag(name = "Guests", description = "Guest management operations")
 public class GuestController {
 
     private final GuestService guestService;
 
+    @Operation(summary = "Create a guest", description = "Creates a new guest that can be associated with bookings.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Guest created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content)
+    })
     @PostMapping
     public ResponseEntity<GuestResponseDTO> create(@RequestBody @Valid GuestRequestDTO guestRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(guestService.create(guestRequestDTO));
     }
 
+    @Operation(summary = "Update a guest", description = "Updates an existing guest's name and email.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Guest updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Guest not found", content = @Content)
+    })
     @PutMapping("/{id}")
-    public GuestResponseDTO update(@RequestBody @Valid GuestRequestDTO guestRequestDTO, @PathVariable Long id) {
+    public GuestResponseDTO update(@RequestBody @Valid GuestRequestDTO guestRequestDTO,
+                                   @Parameter(description = "Guest ID", example = "1") @PathVariable Long id) {
         return guestService.update(guestRequestDTO, id);
     }
 
+    @Operation(summary = "Delete a guest", description = "Permanently deletes a guest.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Guest deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Guest not found", content = @Content)
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@Parameter(description = "Guest ID", example = "1") @PathVariable Long id) {
         guestService.delete(id);
         return ResponseEntity.noContent().build();
     }
