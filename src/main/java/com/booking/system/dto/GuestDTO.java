@@ -14,11 +14,11 @@ public class GuestDTO {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Guest name is required")
     private String name;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be valid")
     private String email;
 
     public static Guest toGuest(final GuestDTO in) {

@@ -15,10 +15,10 @@ public class PropertyDTO {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Property name is required")
     private String name;
 
-    @NotNull
+    @NotNull(message = "Property type is required")
     private PropertyType type;
 
     public static Property toProperty(final PropertyDTO in) {

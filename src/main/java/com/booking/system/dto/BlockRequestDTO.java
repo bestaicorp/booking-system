@@ -14,13 +14,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class BlockRequestDTO {
 
-    @NotNull
+    @NotNull(message = "Property ID is required")
     private Long propertyId;
 
-    @NotNull
+    @NotNull(message = "Start date is required")
     private LocalDate startDate;
 
-    @NotNull
+    @NotNull(message = "End date is required")
     private LocalDate endDate;
 
     private String reason;

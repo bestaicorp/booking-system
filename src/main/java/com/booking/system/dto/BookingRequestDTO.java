@@ -14,16 +14,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingRequestDTO {
-    @NotNull
+    @NotNull(message = "Property ID is required")
     private Long propertyId;
 
-    @NotNull
+    @NotNull(message = "Guest ID is required")
     private Long guestId;
 
-    @NotNull
+    @NotNull(message = "Start date is required")
     private LocalDate startDate;
 
-    @NotNull
+    @NotNull(message = "End date is required")
     private LocalDate endDate;
 
     public static Booking toBooking(final BookingRequestDTO in, Property property, Guest guest) {
