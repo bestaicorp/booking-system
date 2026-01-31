@@ -9,9 +9,11 @@ import com.booking.system.model.Property;
 import com.booking.system.repository.BlockRepository;
 import com.booking.system.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -23,24 +25,36 @@ public class BlockService {
     private final PropertyRepository propertyRepository;
 
     public BlockResponseDTO create(BlockRequestDTO blockRequestDTO) {
+        log.info("Creating block for property {}, dates: {} - {}",
+                blockRequestDTO.getPropertyId(),
+                blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate());
         dateValidationService.validate(blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate());
         Property property = propertyRepository.findAndLockProperty(blockRequestDTO.getPropertyId())
                 .orElseThrow(() -> new PropertyNotFoundException(blockRequestDTO.getPropertyId()));
         availabilityService.ensureAvailableForBlock(property.getId(), blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate(), null);
-        return BlockResponseDTO.of(blockRepository.save(BlockRequestDTO.toBlock(blockRequestDTO, property)));
+        Block saved = blockRepository.save(BlockRequestDTO.toBlock(blockRequestDTO, property));
+        log.info("Block created successfully with id {}", saved.getId());
+        return BlockResponseDTO.of(saved);
     }
 
     public BlockResponseDTO update(BlockRequestDTO blockRequestDTO, Long id) {
+        log.info("Updating block {} for property {}, dates: {} - {}",
+                id, blockRequestDTO.getPropertyId(),
+                blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate());
         dateValidationService.validate(blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate());
         Property property = propertyRepository.findAndLockProperty(blockRequestDTO.getPropertyId())
                 .orElseThrow(() -> new PropertyNotFoundException(blockRequestDTO.getPropertyId()));
         availabilityService.ensureAvailableForBlock(blockRequestDTO.getPropertyId(), blockRequestDTO.getStartDate(), blockRequestDTO.getEndDate(), id);
         Block blockDB = findBlock(id);
-        return BlockResponseDTO.of(updateBlock(blockRequestDTO, blockDB, property));
+        Block updated = updateBlock(blockRequestDTO, blockDB, property);
+        log.info("Block {} updated successfully", id);
+        return BlockResponseDTO.of(updated);
     }
 
     public void delete(final Long blockId) {
+        log.info("Deleting block {}", blockId);
         blockRepository.delete(findBlock(blockId));
+        log.info("Block {} deleted successfully", blockId);
     }
 
     private Block findBlock(Long blockId) {

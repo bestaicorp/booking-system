@@ -1,16 +1,19 @@
 package com.booking.system.service;
 
 import com.booking.system.exception.InvalidDateRangeException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Service
 public class DateValidationService {
 
     private static final int MAX_FUTURE_YEARS = 2;
 
     public void validate(LocalDate startDate, LocalDate endDate) {
+        log.debug("Validating date range: {} - {}", startDate, endDate);
         if (startDate.isAfter(endDate)) {
             throw new InvalidDateRangeException("Start date must be before end date");
         }
