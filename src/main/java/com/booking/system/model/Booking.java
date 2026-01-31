@@ -6,7 +6,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,18 +26,14 @@ public class Booking {
     @Setter(NONE)
     private Long id;
 
-    @NotNull
     @ManyToOne
     private Property property;
 
-    @NotNull
     @ManyToOne
     private Guest guest;
 
-    @NotNull
     private LocalDate startDate;
 
-    @NotNull
     private LocalDate endDate;
 
     @Enumerated(STRING)

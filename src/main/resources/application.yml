@@ -12,4 +12,4 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
-    format_sql: true
+    format-sql: true

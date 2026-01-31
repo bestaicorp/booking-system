@@ -89,6 +89,7 @@ public class BookingService {
         if (bookingDB.getStatus() != CANCELLED) {
             throw new InvalidBookingStateException("Only cancelled bookings can be rebooked");
         }
+        dateValidationService.validate(bookingDB.getStartDate(), bookingDB.getEndDate());
         propertyRepository.findAndLockProperty(bookingDB.getProperty().getId())
                 .orElseThrow(() -> new PropertyNotFoundException(bookingDB.getProperty().getId()));
 
