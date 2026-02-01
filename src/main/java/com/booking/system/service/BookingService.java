@@ -93,6 +93,7 @@ public class BookingService {
         return BookingResponseDTO.of(bookingDB);
     }
 
+    /** Reactivates a cancelled booking. Re-validates dates and checks for overlaps since they may have changed. */
     public BookingResponseDTO rebook(Long bookingId) {
         log.info("Rebooking booking {}", bookingId);
         Booking bookingDB = findBooking(bookingId);

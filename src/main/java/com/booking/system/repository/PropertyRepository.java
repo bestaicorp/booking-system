@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface PropertyRepository extends JpaRepository<Property, Long> {
+
+    /** Loads a property with a pessimistic write lock (SELECT ... FOR UPDATE) to prevent concurrent bookings. */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT p FROM Property p WHERE p.id = :id")
     Optional<Property> findAndLockProperty(@Param("id") Long id);

@@ -12,6 +12,7 @@ public class DateValidationService {
 
     private static final int MAX_FUTURE_YEARS = 2;
 
+    /** Validates that start is before end, dates are not in the past, and end is within 2 years. */
     public void validate(LocalDate startDate, LocalDate endDate) {
         log.debug("Validating date range: {} - {}", startDate, endDate);
         if (startDate.isAfter(endDate)) {

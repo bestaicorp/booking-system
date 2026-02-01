@@ -10,6 +10,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
+
+    /**
+     * Checks if any active booking overlaps the given date range on a property.
+     * Adjacent dates don't conflict (checkout day = next check-in day is allowed).
+     *
+     * @param excludeId booking to exclude from the check (for updates), or null
+     */
     @Query("SELECT COUNT(b) > 0 FROM Booking b " +
             "WHERE b.property.id = :propertyId " +
             "AND b.startDate < :endDate " +

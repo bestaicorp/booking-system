@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
                 title = "Booking System API",
                 version = "1.0",
                 description = "RESTFUL API for managing property bookings and blocks. "
-                        + "Supports creating, updating, cancelling, and rebooking reservations "
+                        + "Supports creating, updating, cancelling, and rebooking bookings "
                         + "with overlap prevention using pessimistic locking.",
                 contact = @Contact(name = "Booking System")
         ),

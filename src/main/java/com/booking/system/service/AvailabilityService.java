@@ -21,6 +21,7 @@ public class AvailabilityService {
     private final BookingRepository bookingRepository;
     private final BlockRepository blockRepository;
 
+    /** Throws {@link DateAlreadyBookedException} if the dates overlap any active booking or block. */
     public void ensureAvailableForBooking(Long propertyId, LocalDate startDate, LocalDate endDate, Long bookingId) {
         log.debug("Checking booking availability for property {}, dates: {} - {}, excludeId: {}",
                 propertyId, startDate, endDate, bookingId);
@@ -35,6 +36,7 @@ public class AvailabilityService {
         }
     }
 
+    /** Throws {@link DateAlreadyBookedException} if the dates overlap any active booking or existing block. */
     public void ensureAvailableForBlock(Long propertyId, LocalDate startDate, LocalDate endDate, Long blockId) {
         log.debug("Checking block availability for property {}, dates: {} - {}, excludeId: {}",
                 propertyId, startDate, endDate, blockId);
